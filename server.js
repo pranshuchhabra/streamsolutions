@@ -5,33 +5,69 @@ const fs = require("fs");
 const ejs = require("ejs");
 const port = process.env.PORT || 3000;
 
+
+
+
+// old code
+
 app.use(express.json());
 
 app.set("views", path.join("views"));
 
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  console.log("Inside Home page 0");
-  res.render("index", { title: "login" });
+app.use('/static', express.static(path.join(__dirname, 'routes')));
+
+
+
+
+//  routing 
+
+
+
+
+app.get('/', (req, res) => {
+  console.log("inside home page 0");
+  res.render("index");
 });
 
-app.get("/login", (req, res) => {
-  console.log("Inside Home page 0");
-  res.render("index", { title: "login" });
+app.get('/login', (req, res) => {
+  console.log("inside login page");
+  res.render("index");
 });
+
+
 
 // app.get('/dashboard', (req, res) => {
-//     console.log("Inside Home page 1");
-//     res.render('dashboard', { title: "admin" });
+//     console.log("inside dashboard page 1");
+//     res.render('dashboard');
 
 // })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static("public"));
 
-app.post("/dashboard", (req, res) => {
+app.post("/admin", (req, res) => {
   const userData = JSON.parse(fs.readFileSync("login-data.json"));
 
   const user = userData.users.find(
@@ -42,11 +78,12 @@ app.post("/dashboard", (req, res) => {
     res.status(401).json({ error: "Invalid credentials" });
   } else {
     let userData = {};
-    if (user.username === "paras") {
+    if (user.username === "paras@example.com") {
       userData = JSON.parse(fs.readFileSync("user1.json"));
-    } else if (user.username === "pranshu") {
+      // console.log(userData);
+    } else if (user.username === "pranshu@example.com") {
       userData = JSON.parse(fs.readFileSync("user2.json"));
-    } else if (user.username === "nikhil") {
+    } else if (user.username === "nikhil@example.com") {
       userData = JSON.parse(fs.readFileSync("user3.json"));
     }
 
@@ -54,27 +91,21 @@ app.post("/dashboard", (req, res) => {
   }
 });
 
+
+
+
+
+
+app.get('/dashboard', (req, res) => {
+  const isLoggedIn = true;
+  if (isLoggedIn) {
+    res.render('dashboard');
+
+  } else {
+    res.redirect('/');
+  }
+})
+
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
-
-// let data;
-
-// switch (user.username) {
-//     case 'paras':
-//         data = JSON.parse(fs.readFileSync('user1.json'));
-//         data = JSON.stringify(data);
-//         console.log(data);
-
-//         break;
-//     case 'pranshu':
-//         data = JSON.parse(fs.readFileSync('user2.json'));
-//         console.log(data);
-//         break;
-//     case 'nikhil':
-//         data = JSON.parse(fs.readFileSync('user3.json'));
-//         break;
-//     default:
-//         data = [];
-
-// }

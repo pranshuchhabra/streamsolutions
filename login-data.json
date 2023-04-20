@@ -1,16 +1,16 @@
 {
   "users": [
     {
-      "username": "paras",
-      "password": "pass1"
+      "username": "paras@example.com",
+      "password": "paras@123"
     },
     {
-      "username": "pranshu",
-      "password": "pass2"
+      "username": "pranshu@example.com",
+      "password": "pranshu@456"
     },
     {
-      "username": "nikhil",
-      "password": "pass3"
+      "username": "nikhil@example.com",
+      "password": "nikhil@678"
     }
   ]
 }
