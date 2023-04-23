@@ -1,38 +1,35 @@
-
-
 function login() {
-    event.preventDefault()
-    const form = document.querySelector("#login-form");
-    const formData = new FormData(form);
-    console.log("formData", form)
+  event.preventDefault();
+  const form = document.querySelector("#login-form");
+  const formData = new FormData(form);
+  console.log("formData", form);
 
-    fetch("/admin", {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+  const username = formData.get("username");
+  const password = formData.get("password");
 
-        },
-        body: JSON.stringify({ username: "", password: "paras@123" }),
-    })
-        .then((response) => {
+  fetch("/admin", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
 
-            console.log(response)
-            if (response.status === 200) {
-                console.log("in 200")
-                window.location.href = "/dashboard"
-            }
-            else if (response.status === 401) {
-                response.text().then((errorMessage) => {
-                    console.log("IN 400")
+    body: JSON.stringify({ username, password }),
+  }).then((response) => {
+    console.log(response);
 
-                    console.log(errorMessage);
-                    form.reset();
-                });
+    if (response.status === 200) {
+      console.log("OK");
+      window.location.href = "/dashboard";
+    } else if (response.status === 401) {
+      response.text().then((errorMessage) => {
+        console.log("NOT OK");
 
-            }
-        })
-
-
-
+        alert(errorMessage);
+        //form.reset();
+      });
+    }
+  });
 }
+
+
