@@ -8,7 +8,7 @@ const ejs = require("ejs");
 const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 const { request } = require("http");
-const router = express.Router();  
+const router = express.Router();
 
 // old code
 
@@ -59,19 +59,11 @@ app.get("/dashboard", function (req, res, next) {
     return;
   }
 
-  // let userData = {};
   userdata = {};
   console.log("inside dashboard page");
-  // console.log(req.session.data);
-  // data = req.session.data;
+
   data = JSON.parse(req.session.data);
-  // userdata.append(data)
-  // console.log(req.session.data)
-  // var data = req.session.data;
-  // console.log("Priti",data)
-  // // userData = JSON.parse(fs.readFileSync("user1.json"));
-  // data = data.data
-  // data=[];
+
   res.render("dashboard", { data: data });
 });
 
@@ -86,7 +78,7 @@ app.post("/admin", (req, res, next) => {
 
   if (!user) {
     // console.log("error");
-    res.status(401).json({ error: "Invalid credentials" });
+    res.status(401).send("Invalid credentials");
     res.redirect("/");
   } else {
 
@@ -103,6 +95,7 @@ app.post("/admin", (req, res, next) => {
       userData = JSON.parse(fs.readFileSync("user3.json"));
     }
     req.session.data = JSON.stringify(userData.data);
+    // req.session.auth = true;
     // console.log("Guru" + req.session.data);
     res.render("dashboard", { data: userData.data });
 
@@ -113,12 +106,13 @@ app.post("/admin", (req, res, next) => {
 
 // =============================================== new
 
-app.post("/out", function (req, res) {
-  req.session.destroy(function () {
-    console.log("user logged out.");
-  });
-  res.redirect("/");
-});
+// app.get("/out", function (req, res) {
+
+//   req.session.destroy(function () {
+//     console.log("user logged out.");
+//   });
+//   res.redirect("/");
+// });
 
 // router.get("/out", (req, res) => {
 //   // Clear the session data
@@ -137,6 +131,29 @@ app.post("/out", function (req, res) {
 // module.exports = router;
 
 // ================================================ new
+
+
+app.get("/file", (req, res) => {
+
+  res.render("file");
+
+})
+
+// app.post('/upload', (req, res) => {
+//   if (!req.files || !req.files.file) {
+//     return res.status(400).send('No file was uploaded.');
+//   }
+
+//   const file = req.files.file;
+//   const filePath = file.tempFilePath;
+
+//   fs.readFile(filePath, 'utf8', function (err, data) {
+//     if (err) throw err;
+//     res.render('file', { fileData: data });
+//   });
+// });
+
+
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000");

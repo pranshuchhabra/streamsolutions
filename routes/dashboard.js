@@ -1,7 +1,14 @@
+if (!sessionStorage.getItem('auth')) {
+  window.location.href = '/';
+}
+
+
+
 let timeoutId;
 
 function resetSessionTimeout() {
   clearTimeout(timeoutId);
+  // sessionStorage.clear();
   timeoutId = setTimeout(showSessionTimeoutModal, 5000);
 }
 
@@ -13,23 +20,36 @@ function showSessionTimeoutModal() {
       keyboard: false,
     }
   );
+  
   modal.show();
-  // sessionStorage.clear();
+  sessionStorage.clear();
+  
 }
 
-// Add event listener to reset the timeout whenever user interacts with the page
+// if(sessionStorage.getItem('')){
+//   window.location.assign('/');
+// }
+
 document.addEventListener("mousemove", resetSessionTimeout);
 document.addEventListener("keydown", resetSessionTimeout);
 document.addEventListener("scroll", resetSessionTimeout);
 
-// Add event listener to the OK button in the modal footer
+
 document.querySelector("#ok-btn").addEventListener("click", () => {
   window.location.href = "/";
 });
 
-resetSessionTimeout(); // start the timer
+resetSessionTimeout(); 
+
 
 $(document).ready(function () {
   $("#myTable").DataTable();
 });
 
+
+
+function logout() {
+  sessionStorage.clear();
+
+  window.location.href = '/';
+}

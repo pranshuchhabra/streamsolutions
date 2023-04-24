@@ -1,3 +1,11 @@
+if (sessionStorage.getItem('auth')) {
+  window.location.href = '/dashboard';
+}
+
+
+
+
+
 function login() {
   event.preventDefault();
   const form = document.querySelector("#login-form");
@@ -20,13 +28,15 @@ function login() {
 
     if (response.status === 200) {
       console.log("OK");
+
+      sessionStorage.setItem("auth", true);
       window.location.href = "/dashboard";
     } else if (response.status === 401) {
       response.text().then((errorMessage) => {
         console.log("NOT OK");
-
+        // console.log(errorMessage);
         alert(errorMessage);
-        //form.reset();
+        form.reset();
       });
     }
   });
