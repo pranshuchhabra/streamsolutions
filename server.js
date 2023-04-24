@@ -9,6 +9,8 @@ const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 const { request } = require("http");
 const router = express.Router();
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/' });
 
 // old code
 
@@ -21,6 +23,7 @@ app.set("view engine", "ejs");
 app.use("/static", express.static(path.join(__dirname, "routes")));
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
@@ -81,8 +84,6 @@ app.post("/admin", (req, res, next) => {
     res.status(401).send("Invalid credentials");
     res.redirect("/");
   } else {
-
-
     // console.log("success");
     let userData = {};
     // console.log("dstgh", req.session);
@@ -101,7 +102,6 @@ app.post("/admin", (req, res, next) => {
 
     // res.status(200).json({ success: "login success" });
   }
-
 });
 
 // =============================================== new
@@ -132,26 +132,26 @@ app.post("/admin", (req, res, next) => {
 
 // ================================================ new
 
-
 app.get("/file", (req, res) => {
-
   res.render("file");
+});
 
-})
 
-// app.post('/upload', (req, res) => {
-//   if (!req.files || !req.files.file) {
-//     return res.status(400).send('No file was uploaded.');
-//   }
 
-//   const file = req.files.file;
-//   const filePath = file.tempFilePath;
-
-//   fs.readFile(filePath, 'utf8', function (err, data) {
-//     if (err) throw err;
-//     res.render('file', { fileData: data });
+// app.post('/upload', upload.single('file'), (req, res) => {
+//   const filePath = req.file.path;
+//   fs.readFile(filePath, 'utf8', (err, data) => {
+//       if (err) {
+//           console.error(err);
+//           res.status(500).send('Internal Server Error');
+//           return;
+//       }
+//       // console.log(data);
+//       var data = JSON.stringify(data);
+//       res.render('file', { data: data });
 //   });
 // });
+
 
 
 

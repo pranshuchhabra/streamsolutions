@@ -1,10 +1,6 @@
-if (sessionStorage.getItem('auth')) {
-  window.location.href = '/dashboard';
+if (sessionStorage.getItem("auth")) {
+  window.location.href = "/dashboard";
 }
-
-
-
-
 
 function login() {
   event.preventDefault();
@@ -41,5 +37,3 @@ function login() {
     }
   });
 }
-
-
