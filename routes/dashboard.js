@@ -1,8 +1,6 @@
-if (!sessionStorage.getItem('auth')) {
-  window.location.href = '/';
+if (!sessionStorage.getItem("auth")) {
+  window.location.href = "/";
 }
-
-
 
 let timeoutId;
 
@@ -20,10 +18,9 @@ function showSessionTimeoutModal() {
       keyboard: false,
     }
   );
-  
+
   modal.show();
   sessionStorage.clear();
-  
 }
 
 // if(sessionStorage.getItem('')){
@@ -34,22 +31,19 @@ document.addEventListener("mousemove", resetSessionTimeout);
 document.addEventListener("keydown", resetSessionTimeout);
 document.addEventListener("scroll", resetSessionTimeout);
 
-
 document.querySelector("#ok-btn").addEventListener("click", () => {
   window.location.href = "/";
 });
 
-resetSessionTimeout(); 
-
+resetSessionTimeout();
 
 $(document).ready(function () {
   $("#myTable").DataTable();
 });
 
-
-
 function logout() {
   sessionStorage.clear();
 
-  window.location.href = '/';
+  window.location.href = "/";
 }
+

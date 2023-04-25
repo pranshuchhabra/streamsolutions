@@ -76,17 +76,19 @@
                 <th>Name</th>
                 <th>Contact</th>
                 <th>Address</th>
-              
+                
+               
               </tr>
             </thead>
             <tbody id="table-body">
-              <% data.forEach(function(item) { %>
-              <tr>
-                <td><%= item.col1 %></td>
-                <td><%= item.col2 %></td>
-                <td><%= item.col3 %></td>
-               
-              </tr>
+              <% data.forEach(function(item, index) { %>
+                <tr>
+                  <td><%= item.col1 %></td>
+                  <td><%= item.col2 %></td>
+                  <td><%= item.col3 %></td>
+                 
+
+                </tr>
               <% }); %>
             </tbody>
           </table>

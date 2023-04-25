@@ -9,8 +9,8 @@ const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 const { request } = require("http");
 const router = express.Router();
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 // old code
 
@@ -72,12 +72,12 @@ app.get("/dashboard", function (req, res, next) {
 
 app.post("/admin", (req, res, next) => {
   const userData = JSON.parse(fs.readFileSync("login-data.json"));
-  console.log("body", req.body);
-  console.log(userData);
+  // console.log("body", req.body);
+  // console.log(userData);
   const user = userData.users.find(
     (u) => u.username === req.body.username && u.password === req.body.password
   );
-  console.log("user", user);
+  // console.log("user", user);
 
   if (!user) {
     // console.log("error");
@@ -96,11 +96,9 @@ app.post("/admin", (req, res, next) => {
       userData = JSON.parse(fs.readFileSync("user3.json"));
     }
     req.session.data = JSON.stringify(userData.data);
-    // req.session.auth = true;
-    // console.log("Guru" + req.session.data);
+    
 
-
-    res.render("dashboard", { data: userData.data });
+    res.render("dashboard", { data: userData.data});
 
     // res.status(200).json({ success: "login success" });
   }
@@ -138,26 +136,26 @@ app.get("/file", (req, res) => {
   res.render("file");
 });
 
-
-
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post("/upload", upload.single("file"), (req, res) => {
   const filePath = req.file.path;
-  fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-          console.error(err);
-          res.status(500).send('Internal Server Error');
-          return;
-      }
-      //  console.log(data);
-      var da = JSON.parse(data);
-      return res.status(200).send({ data: da});
-      // res.render("file", { data: data });
-      // res.render('file',{ data: data });
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    //  console.log(data);
+    var da = JSON.parse(data);
+    return res.status(200).send({ data: da });
+    // res.render("file", { data: data });
+    // res.render('file',{ data: data });
   });
 });
 
+/////////////////////////////////////////////////////////////////////////////
 
 
+/////////////////////////////////////////////////////////////////////
 
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
