@@ -9,7 +9,13 @@ function login() {
   console.log("formData", form);
 
   const username = formData.get("username");
+  // if(!username){
+  //   return;
+  // }
   const password = formData.get("password");
+  // if(!password){
+  //   console.log("oky 1");
+  // }
 
   fetch("/admin", {
     method: "POST",

@@ -9,8 +9,8 @@ const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
 const { request } = require("http");
 const router = express.Router();
-// const multer = require('multer');
-// const upload = multer({ dest: 'uploads/' });
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // old code
 
@@ -98,6 +98,8 @@ app.post("/admin", (req, res, next) => {
     req.session.data = JSON.stringify(userData.data);
     // req.session.auth = true;
     // console.log("Guru" + req.session.data);
+
+
     res.render("dashboard", { data: userData.data });
 
     // res.status(200).json({ success: "login success" });
@@ -138,19 +140,21 @@ app.get("/file", (req, res) => {
 
 
 
-// app.post('/upload', upload.single('file'), (req, res) => {
-//   const filePath = req.file.path;
-//   fs.readFile(filePath, 'utf8', (err, data) => {
-//       if (err) {
-//           console.error(err);
-//           res.status(500).send('Internal Server Error');
-//           return;
-//       }
-//       // console.log(data);
-//       var data = JSON.stringify(data);
-//       res.render('file', { data: data });
-//   });
-// });
+app.post('/upload', upload.single('file'), (req, res) => {
+  const filePath = req.file.path;
+  fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+          console.error(err);
+          res.status(500).send('Internal Server Error');
+          return;
+      }
+      //  console.log(data);
+      var da = JSON.parse(data);
+      return res.status(200).send({ data: da});
+      // res.render("file", { data: data });
+      // res.render('file',{ data: data });
+  });
+});
 
 
 
