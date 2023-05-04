@@ -7,7 +7,7 @@ let timeoutId;
 function resetSessionTimeout() {
   clearTimeout(timeoutId);
   // sessionStorage.clear();
-  timeoutId = setTimeout(showSessionTimeoutModal, 5000);
+  timeoutId = setTimeout(showSessionTimeoutModal, 500000);
 }
 
 function showSessionTimeoutModal() {
